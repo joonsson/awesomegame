@@ -51,7 +51,7 @@ public class Shade {
         while (true) {
             rX = rand.nextInt(61) + 1;
             rY = rand.nextInt(27) + 1;
-            if (Math.abs(rX-pX) < 4 && Math.abs(rY-pY) < 4) {
+            if (Math.abs(rX-pX) > 4 && Math.abs(rY-pY) > 2 && Math.abs(rX-pX) < 20 && Math.abs(rY-pY) < 10) {
                 break;
             }
         }
