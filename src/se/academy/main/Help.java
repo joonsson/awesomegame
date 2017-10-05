@@ -1,7 +1,12 @@
 package se.academy.main;
 
-public class Help {
-    public void draw(Map map, Player player) {
+import java.util.List;
 
+public class Help {
+    public void update(Player player, List<Monster> monsterList) {
+        //move palyer
+        for (Monster monster: monsterList) {
+            monster.move(player.getX(), player.getY());
+        }
     }
 }

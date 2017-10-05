@@ -7,8 +7,8 @@ public class Player {
     private char appearance;
 
     public Player() {
-        x = 100;
-        y = 100;
+        x = 15;
+        y = 15;
         lives = 1;
         appearance = 'O';
     }
