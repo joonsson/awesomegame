@@ -15,7 +15,7 @@ public class Player {
         y = 16;
         lives = 1;
         appearance = '\u263A';
-        ticker = 0;
+        ticker = -1;
         colour = Terminal.Color.MAGENTA;
     }
     public void move(int dx, int dy) {

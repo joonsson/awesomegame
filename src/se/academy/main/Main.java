@@ -21,11 +21,17 @@ public class Main {
         Help helper = new Help();
         Player player = new Player();
         List<Monster> monsterList = new ArrayList<>();
+        List<Shade> shadeList = new ArrayList<>();
+        Colour purple = new Colour(50, 0, 50);
         Monster monsterOne = new Monster('X', 10, 10, 1, false, Terminal.Color.GREEN);
         Monster monsterTwo = new Monster('X', 20, 20, 1, true, Terminal.Color.RED);
+        Shade shadeOne = new Shade('\u1F47', 15, 25, 1, true, purple);
+        shadeList.add(shadeOne);
         monsterList.add(monsterOne);
         monsterList.add(monsterTwo);
         boolean ingame = true;
+        terminal.moveCursor(20, 20);
+        terminal.putCharacter('O');
 
         while (ingame) {
             Key key;
@@ -59,8 +65,8 @@ public class Main {
                     }
             }
             terminal.clearScreen();
-            helper.update(player, monsterList);
-            helper.updateTickers(player, monsterList);
+            helper.update(player, monsterList, shadeList);
+            helper.updateTickers(player, monsterList, shadeList);
             if (player.getTicker() > 99) map.secondMap();
             terminal.applyForegroundColor(map.getColour());
             for (int i = 0; i < mapArray.length; i++) {
@@ -79,6 +85,11 @@ public class Main {
                 terminal.moveCursor(monster.getX(), monster.getY());
                 terminal.putCharacter(monster.getAppearance());
             }
+            for (Shade shade : shadeList) {
+                terminal.applyForegroundColor(shade.getColour().getR(), shade.getColour().getG(), shade.getColour().getB());
+                terminal.moveCursor(shade.getX(), shade.getY());
+                terminal.putCharacter(shade.getAppearance());
+            }
             terminal.applyForegroundColor(Terminal.Color.WHITE);
             String score = "Score:";
             String steps = "" + player.getTicker();
@@ -90,7 +101,7 @@ public class Main {
                 terminal.moveCursor(scoreX + i,scoreY);
                 terminal.putCharacter(steps.charAt(i));
             }
-            boolean monsterCollision = helper.checkMonsterCollision(player, monsterList);
+            boolean monsterCollision = helper.checkMonsterCollision(player, monsterList, shadeList);
             if (monsterCollision) ingame = false;
         }
         System.out.println("Game over");
