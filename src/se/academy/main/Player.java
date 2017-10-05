@@ -6,8 +6,8 @@ public class Player {
     private int lives;
 
     public Player() {
-        x = 400;
-        y = 400;
+        x = 100;
+        y = 100;
         lives = 1;
     }
 
