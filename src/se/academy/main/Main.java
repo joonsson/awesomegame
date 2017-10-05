@@ -16,12 +16,17 @@ public class Main {
                 System.out, Charset.forName("UTF8"));
         terminal.enterPrivateMode();
         terminal.setCursorVisible(false);
+        int scoreX = 70;
+        int scoreY = 28;
         Map map =  new Map();
+        char[][] mapArray = map.getMap();
         Help helper = new Help();
         Player player = new Player();
         List<Monster> monsterList = new ArrayList<>();
-        Monster monsterOne = new Monster('X', 10, 10, 1);
+        Monster monsterOne = new Monster('X', 10, 10, 1, false, Terminal.Color.GREEN);
+        Monster monsterTwo = new Monster('X', 20, 20, 1, true, Terminal.Color.RED);
         monsterList.add(monsterOne);
+        monsterList.add(monsterTwo);
         boolean ingame = true;
         while (ingame) {
             Key key;
@@ -45,22 +50,36 @@ public class Main {
             }
             terminal.clearScreen();
             helper.update(player, monsterList);
-            char[][] mapArray = map.getMap();
+            helper.updateTickers(player, monsterList);
+            if (player.getTicker() > 99) map.secondMap();
+            terminal.applyForegroundColor(map.getColour());
             for (int i = 0; i < mapArray.length; i++) {
-                for (int j = 0; j < mapArray.length - 30; j++) {
+                for (int j = 0; j < mapArray.length - 33; j++) {
                     if (mapArray[i][j] != '\u0000') {
                         terminal.moveCursor(i, j);
                         terminal.putCharacter(mapArray[i][j]);
                     }
                 }
             }
+            terminal.applyForegroundColor(player.getColour());
             terminal.moveCursor(player.getX(), player.getY());
             terminal.putCharacter(player.getAppearance());
             for (Monster monster : monsterList) {
+                terminal.applyForegroundColor(monster.getColour());
                 terminal.moveCursor(monster.getX(), monster.getY());
                 terminal.putCharacter(monster.getAppearance());
             }
-            helper.updateTickers(player, monsterList);
+            terminal.applyForegroundColor(Terminal.Color.WHITE);
+            String score = "Score:";
+            String steps = "" + player.getTicker();
+            for (int i = 0; i < score.length(); i++) {
+                terminal.moveCursor(scoreX + i - 5,scoreY - 1);
+                terminal.putCharacter(score.charAt(i));
+            }
+            for (int i = 0; i < steps.length(); i++) {
+                terminal.moveCursor(scoreX + i,scoreY);
+                terminal.putCharacter(steps.charAt(i));
+            }
             boolean monsterCollision = helper.checkMonsterCollision(player, monsterList);
             if (monsterCollision) ingame = false;
         }

@@ -5,7 +5,7 @@ import java.util.List;
 public class Help {
     public void update(Player player, List<Monster> monsterList) {
         for (Monster monster: monsterList) {
-            monster.move(player.getX(), player.getY());
+            monster.move(player.getX(), player.getY(), player.getTicker());
         }
     }
     public boolean checkMapCollision(Player player, char[][] mapArray) {
