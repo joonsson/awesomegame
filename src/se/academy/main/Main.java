@@ -1,14 +1,18 @@
 package se.academy.main;
 
-import com.googlecode.lanterna.input.Key;
-import com.googlecode.lanterna.input.KeyMappingProfile;
+import com.googlecode.lanterna.TerminalFacade;
 import com.googlecode.lanterna.terminal.Terminal;
-import com.googlecode.lanterna.terminal.TerminalSize;
+
+import java.nio.charset.Charset;
 
 public class Main {
     public static void main(String[] args) {
-        Terminal terminal = new Terminal() {
-        Map map =  new Map;
-        Help helper = new Help;
+        Terminal terminal = TerminalFacade.createTerminal(System.in,
+                System.out, Charset.forName("UTF8"));
+        terminal.enterPrivateMode();
+        Map map =  new Map();
+        Help helper = new Help();
+
+
     }
 }
