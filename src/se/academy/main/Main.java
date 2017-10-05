@@ -22,8 +22,8 @@ public class Main {
         List<Monster> monsterList = new ArrayList<>();
         Monster monsterOne = new Monster('X', 10, 10, 1);
         monsterList.add(monsterOne);
-
-        while (true) {
+        boolean ingame = true;
+        while (ingame) {
             Key key;
             do {
                 Thread.sleep(5);
@@ -44,6 +44,7 @@ public class Main {
                     player.move(0, -1);
             }
             terminal.clearScreen();
+            helper.update(player, monsterList);
             char[][] mapArray = map.getMap();
             for (int i = 0; i < mapArray.length; i++) {
                 for (int j = 0; j < mapArray.length; j++) {
@@ -59,7 +60,9 @@ public class Main {
                 terminal.moveCursor(monster.getX(), monster.getY());
                 terminal.putCharacter(monster.getAppearance());
             }
-            helper.update(player, monsterList);
+            boolean monsterCollision = helper.checkMonsterCollision(player, monsterList);
+            if (monsterCollision) ingame = false;
         }
+        System.out.println("Game over");
     }
 }
