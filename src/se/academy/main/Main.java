@@ -8,8 +8,6 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.Thread.sleep;
-
 public class Main {
     public static void main(String[] args) throws InterruptedException {
         Terminal terminal = TerminalFacade.createTerminal(System.in,
@@ -28,6 +26,7 @@ public class Main {
         monsterList.add(monsterOne);
         monsterList.add(monsterTwo);
         boolean ingame = true;
+
         while (ingame) {
             Key key;
             do {
@@ -35,18 +34,29 @@ public class Main {
                 key = terminal.readInput();
             } while (key == null);
             System.out.println(key);
+            int pX = player.getX();
+            int pY = player.getY();
+
             switch (key.getKind()) {
                 case ArrowDown:
-                    player.move(0, 1);
+                    if (mapArray[pX][pY+1] == '\u0000') {
+                        player.move(0, 1);
+                    }
                     break;
                 case ArrowLeft:
-                    player.move(-2, 0);
+                    if (mapArray[pX-1][pY] == '\u0000' && mapArray[pX-2][pY] == '\u0000') {
+                        player.move(-2, 0);
+                    }
                     break;
                 case ArrowRight:
-                    player.move(2, 0);
+                    if (mapArray[pX+1][pY] == '\u0000' && mapArray[pX+2][pY] == '\u0000') {
+                        player.move(2, 0);
+                    }
                     break;
                 case ArrowUp:
-                    player.move(0, -1);
+                    if (mapArray[pX][pY-1] == '\u0000') {
+                        player.move(0, -1);
+                    }
             }
             terminal.clearScreen();
             helper.update(player, monsterList);
