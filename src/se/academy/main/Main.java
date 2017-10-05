@@ -35,10 +35,10 @@ public class Main {
                     player.move(0, 1);
                     break;
                 case ArrowLeft:
-                    player.move(-1, 0);
+                    player.move(-2, 0);
                     break;
                 case ArrowRight:
-                    player.move(1, 0);
+                    player.move(2, 0);
                     break;
                 case ArrowUp:
                     player.move(0, -1);
@@ -47,7 +47,7 @@ public class Main {
             helper.update(player, monsterList);
             char[][] mapArray = map.getMap();
             for (int i = 0; i < mapArray.length; i++) {
-                for (int j = 0; j < mapArray.length; j++) {
+                for (int j = 0; j < mapArray.length - 30; j++) {
                     if (mapArray[i][j] != '\u0000') {
                         terminal.moveCursor(i, j);
                         terminal.putCharacter(mapArray[i][j]);
@@ -60,6 +60,7 @@ public class Main {
                 terminal.moveCursor(monster.getX(), monster.getY());
                 terminal.putCharacter(monster.getAppearance());
             }
+            helper.updateTickers(player, monsterList);
             boolean monsterCollision = helper.checkMonsterCollision(player, monsterList);
             if (monsterCollision) ingame = false;
         }

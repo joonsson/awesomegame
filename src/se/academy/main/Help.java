@@ -23,4 +23,10 @@ public class Help {
         }
         return false;
     }
+    public void updateTickers(Player player, List<Monster> monsterList) {
+        player.updateTicker();
+        for (Monster monster: monsterList) {
+            monster.updateTicker();
+        }
+    }
 }

@@ -5,12 +5,14 @@ public class Player {
     private int y;
     private int lives;
     private char appearance;
+    private int ticker;
 
     public Player() {
-        x = 15;
-        y = 15;
+        x = 16;
+        y = 16;
         lives = 1;
-        appearance = 'O';
+        appearance = '\u263A';
+        ticker = 0;
     }
     public void move(int dx, int dy) {
         x += dx;
@@ -30,5 +32,12 @@ public class Player {
 
     public char getAppearance() {
         return appearance;
+    }
+
+    public int getTicker() {
+        return ticker;
+    }
+    public void updateTicker() {
+        ticker++;
     }
 }
